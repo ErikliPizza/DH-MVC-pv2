@@ -1,0 +1,12 @@
+
+for spesific action restricted:
+
+$this->requireLogin();
+
+bla bla bla
+
+
+
+for whole the controller restricted:
+
+class XXX extends Authenticated

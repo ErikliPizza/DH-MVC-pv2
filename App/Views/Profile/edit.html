@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block footer %}
+
+  <script src="/js/hideShowPassword.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    jQuery.validator.addMethod("validateUsername", function(value, element) {
+      // allow any non-whitespace characters as the host part
+      return /^[A-Za-z][A-Za-z0-9]*$/.test( value );
+    }, 'Must start with letter and contain only letter and number');
+
+    jQuery.validator.addMethod("validateNickname", function(value, element) {
+      // allow any non-whitespace characters as the host part
+      return /^[A-Za-z][A-Za-z0-9]*$/.test( value );
+    }, 'Must start with letter and contain only letter and number');
+    $(document).ready(function()
+    {
+
+      var userId = '{{ user.id }}';
+      $('#formProfile').validate({
+        rules: {
+          username: {
+            required: true,
+            minlength: 6,
+            maxlength: 21,
+            validateUsername: true,
+            remote: {
+              url: '/account/validate-username',
+              data: {
+                ignore_id: function() {
+                  return userId;
+                }
+              }
+            }
+          },
+          nickname: {
+            required: true,
+            minlength: 6,
+            maxlength: 21,
+            validateNickname: true
+          },
+          mail: {
+            required: true,
+            email: true,
+            remote: {
+              url: '/account/validate-mail',
+              data: {
+                ignore_id: function() {
+                  return userId;
+                }
+              }
+            }
+          },
+          password: {
+            minlength: 6,
+            validatePassword: true
+          }
+        },
+        messages: {
+          mail: {
+            remote: 'Mail already taken'
+          },
+          username: {
+            remote: 'Username already taken'
+          }
+        }
+      });
+
+      /**
+      * Show password toggle button
+      */
+      $('#inputPassword').hideShowPassword({
+        show: false,
+        innerToggle: 'focus'
+      });
+    });
+  </script>
+
+{% endblock %}
+
+{% block body %}
+
+  <h1>Profile</h1>
+
+  {% if user.errors is not empty %}
+  <p>Errors:</p>
+  <ul>
+    {% for error in user.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <form method="post" id="formProfile" action="/profile/update">
+
+    <div class="">
+      <label for="inputUsername">Username</label>
+      <input type="text" name="username" id="inputUsername" placeholder="enter username" value="{{ user.username }}" maxlength="21">
+    </div>
+
+    <div class="">
+      <label for="inputMail">Mail</label>
+      <input type="email" name="mail" id="inputMail" placeholder="enter mail" value="{{ user.mail }}">
+    </div>
+
+    <div class="">
+      <label for="inputNickname">Nickname</label>
+      <input type="text" name="nickname" id="inputNickname" placeholder="enter nickname" value="{{ user.nickname }}" maxlength="21">
+    </div>
+
+    <div class="">
+      <label for="inputPassword">Password</label>
+      <input type="password" name="password" id="inputPassword" placeholder="enter password"
+             aria-describedby="helpBlock"/>
+      <span id="helpBlock">Leave blank to keep current password</span>
+    </div>
+
+    <div class="">
+      <button type="submit" name="button">Save</button>
+      <a href="/profile/show">Cancel</a>
+
+    </div>
+
+  </form>
+
+{% endblock %}
