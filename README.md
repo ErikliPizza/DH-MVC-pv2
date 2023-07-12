@@ -4,10 +4,12 @@ Check the official documentation over <a href="https://github.com/daveh/php-mvc"
 
 # Custom Addititions
 
-1- User can log in via username or email.
-2- You have to confirm you have access to the current mail address when you want to link a new mail adress to your account.
-3- Visual addititions.
-4- ETC.
-5- Do not forget to set-up your mail server configurations on App/Mail.php
+<ul>
+  <li>User can log in via username or email.</li>
+  <li>You have to confirm you have access to the current mail address when you want to link a new mail adress to your account.</li>
+  <li>Visual addititions.</li>
+  <li>ETC.</li>
+  <li>Do not forget to set-up your mail server configurations on App/Mail.php</li>
+</ul>
 
 Check out for the differences between original Dave's repo and this customized one.
