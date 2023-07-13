@@ -13,3 +13,5 @@ Check the official documentation over <a href="https://github.com/daveh/php-mvc"
 </ul>
 
 Check out for the differences between original Dave's repo and this customized one.
+
+# This repo is ready to use as template for fresh projects within peace of mind.
